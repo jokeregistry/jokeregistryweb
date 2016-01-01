@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<table>
+	<thead>
+		<tr>
+			<th>Claim Number</th>
+			<th>Claim Type</th>
+			<th>Claim Status</th>
+			<th>Created Date</th>
+		</tr>
+	</thead>
+	<tbody>
+{% for claim in object_list %}
+		<tr>
+			<td>{{ claim.id }}</td>
+			<td>{{ claim.type }}</td>
+			<td>{{ claim.get_status_display }}</td>
+			<td>{{ claim.created|date:"SHORT_DATE_FORMAT" }}
+		</tr>
+{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

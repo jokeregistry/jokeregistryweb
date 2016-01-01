@@ -1,8 +1,7 @@
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
 
-    username = models.CharField(max_length=25)
-    USERNAME_FIELD = 'username'
+    twitter_id = models.IntegerField(null=True, blank=True)
