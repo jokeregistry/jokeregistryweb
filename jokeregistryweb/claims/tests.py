@@ -47,7 +47,7 @@ class ClaimsTestCase(TestCase):
             status=200,
             match_querystring=True)
 
-        bad_joke = Joke.objects.import_from_tweet('651932161755475968')
+        bad_joke = Joke.objects.import_from_url('https://twitter.com/cregslist/status/651932161755475968')
 
         claim = Claim.objects.create(
             joke=bad_joke,
