@@ -53,6 +53,9 @@ class JokeManager(models.Manager):
 
         return joke
 
+    def approved(self):
+        return self.filter(approved=True)
+
 
 class Joke(models.Model):
 
@@ -60,6 +63,7 @@ class Joke(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     created = models.DateTimeField()
     link = models.URLField(null=True, blank=True)
+    approved = models.BooleanField(default=True)
 
     # On an "original" joke, this will be null
     # N.B. Chris tried naming this field "original" and tests broke
