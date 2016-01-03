@@ -15,9 +15,6 @@ class Claim(models.Model):
         (REJECTED, 'Rejected')
     )
 
-    PRIOR_ART = 0
-    INFRINGEMENT = 1
-
     joke = models.ForeignKey(
         'jokes.Joke',
         help_text='The joke this claim is in regards to')
