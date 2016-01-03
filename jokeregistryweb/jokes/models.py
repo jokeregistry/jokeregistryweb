@@ -8,7 +8,8 @@ class JokeManager(models.Manager):
 
     def import_from_url(self, url):
         kwargs = self.registry.load(url)
-        return self.create(**kwargs)
+        if kwargs:
+            return self.create(**kwargs)
 
     def approved(self):
         return self.filter(approved=True)

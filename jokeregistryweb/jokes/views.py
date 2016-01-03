@@ -4,7 +4,7 @@ from django.http import HttpResponseNotAllowed
 from .models import Joke
 
 
-def submit(request):
+def load(request):
     if request.METHOD != 'POST':
         return HttpResponseNotAllowed(['POST'])
 
@@ -15,4 +15,4 @@ def submit(request):
         data = request.POST
 
     joke = Joke.objects.import_from_url(data['url'])
-
+    
