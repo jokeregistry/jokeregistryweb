@@ -17,5 +17,8 @@ Including another URLconf
 from django.conf.urls import url, include
 
 urlpatterns = [
-    url(r'^claims/', include('jokeregistryweb.claims.urls'))
+    url('', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+    url(r'^claims/', include('jokeregistryweb.claims.urls')),
+    url(r'^$', 'jokeregistryweb.jokes.views.index'),
 ]

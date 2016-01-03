@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'social.apps.django_app.default',
+
     'jokeregistryweb.accounts',
     'jokeregistryweb.claims',
-    'jokeregistryweb.jokes'
+    'jokeregistryweb.jokes',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -67,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -125,7 +129,20 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User'
 
+AUTHENTICATION_BACKENDS = (
+    'social.backends.twitter.TwitterOAuth',
+)
+
 try:
     from .secrets import *
 except ImportError:
     pass
+
+# python-social-auth settings
+SOCIAL_AUTH_AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS
+
+SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'email', 'twitter_id']
