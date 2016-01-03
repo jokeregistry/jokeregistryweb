@@ -29,12 +29,7 @@ class Claim(models.Model):
         ordering = ('-created', '-updated')
 
     def approve(self):
-        link_split = self.link.split('/')
-        if len(link_split) < 6 or link_split[2] != 'twitter.com' or link_split[4] != 'status':
-            return  # Fast out, we don't know what this URL is
-
-        status_id = link_split[-1]
-        new_joke = Joke.objects.import_from_tweet(status_id)
+        new_joke = Joke.objects.import_from_url(self.link)
 
         if new_joke.created < self.joke.created:
             self.joke.parent = new_joke

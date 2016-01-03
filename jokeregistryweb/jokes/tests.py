@@ -33,7 +33,7 @@ class JokeTestCase(TestCase):
             json=sample_response,
             status=200)
 
-        joke = Joke.objects.import_from_tweet('651932161755475968')
+        joke = Joke.objects.import_from_url('https://twitter.com/cregslist/status/651932161755475968')
         self.assertEquals(joke.text, 'Linkedin Park')
         self.assertEquals(joke.created, datetime(
             year=2015,
