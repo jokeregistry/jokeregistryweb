@@ -1,5 +1,8 @@
 import json
+
 from django.http import HttpResponseNotAllowed
+from django.template import RequestContext
+from django.template.response import TemplateResponse
 
 from .models import Joke
 
@@ -15,4 +18,7 @@ def load(request):
         data = request.POST
 
     joke = Joke.objects.import_from_url(data['url'])
-    
+
+
+def index(request):
+    return TemplateResponse(request, 'index.html')

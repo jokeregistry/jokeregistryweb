@@ -58,3 +58,6 @@ target/
 
 # secrets
 *secrets.py
+
+# sqlite dbs
+*.sqlite3

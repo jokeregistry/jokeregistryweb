@@ -3,6 +3,13 @@
 		<title>The Joke Registry</title>
 	</head>
 	<body>
+        <div>
+            {% if request.user.is_authenticated %}
+            Logged in as {{ user }}. <a href="/logout">Logout</a>
+            {% else %}
+            <a href="{% url 'social:begin' 'twitter' %}">Login</a>
+            {% endif %}
+        </div>
 		{% block body %}
 		{% endblock %}
 	</body>

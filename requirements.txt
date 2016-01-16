@@ -1,4 +1,5 @@
 Django==1.9
+python-social-auth==0.2.13
 pytz==2015.7
 requests==2.9.1
 
