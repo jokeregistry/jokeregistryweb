@@ -126,6 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'public/static/')
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -136,7 +137,9 @@ AUTHENTICATION_BACKENDS = (
 try:
     from .secrets import *
 except ImportError:
-    pass
+    TWITTER_CONSUMER_KEY = 'no-op'
+    TWITTER_CONSUMER_SECRET = 'no-op'
+    TWITTER_BEARER_TOKEN = 'no-op'
 
 # python-social-auth settings
 SOCIAL_AUTH_AUTHENTICATION_BACKENDS = AUTHENTICATION_BACKENDS
