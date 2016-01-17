@@ -15,12 +15,13 @@ Including another URLconf
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import url, include
+from django.contrib.auth.views import logout
 
 from .views import index
 
 urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+    url(r'^logout/$', logout, {'next_page': '/'}),
     url(r'^claims/', include('jokeregistryweb.claims.urls')),
     url(r'^jokes/', include('jokeregistryweb.jokes.urls')),
     url(r'^$', index),
