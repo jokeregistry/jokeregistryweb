@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Submit a new joke</h1>
+<form action="/jokes/load" method="post">
+{% csrf_token %}
+<label>URL to tweet<input type="text" name="url" /></label>
+<button type="submit">Submit</button>
+</form>
+{% endblock body %}

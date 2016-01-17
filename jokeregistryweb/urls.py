@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 
+from .views import index
+
 urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     url(r'^claims/', include('jokeregistryweb.claims.urls')),
-    url(r'^$', 'jokeregistryweb.jokes.views.index'),
+    url(r'^jokes/', include('jokeregistryweb.jokes.urls')),
+    url(r'^$', index),
 ]

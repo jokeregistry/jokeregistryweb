@@ -1,14 +1,29 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase, override_settings, RequestFactory
 
 from jokeregistryweb.jokes.models import Joke
+from jokeregistryweb.jokes.views import load
 from jokeregistryweb.accounts.models import User
 
 from datetime import datetime
 import pytz
 import responses
-
+from unittest.mock import MagicMock
 
 class JokeTestCase(TestCase):
+    @override_settings(TWITTER_BEARER_TOKEN='no-op')
+    def test_twitter_url_submit(self):
+        factory = RequestFactory()
+        request = factory.post(
+            '/jokes/load',
+            {'url': 'https://twitter.com/cregslist/status/651932161755475968'})
+        user = User.objects.create_user(
+            username='sean',
+            email='sean@jokeregistry.online',
+            password='hunter2')
+        request.user = user
+        Joke.objects.import_from_url = MagicMock(return_value=True)
+        response = load(request)
+        self.assertTrue(response.status_code < 500)
 
     @responses.activate
     @override_settings(TWITTER_BEARER_TOKEN='no-op')

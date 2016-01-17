@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Welcome to the Joke Registry</h1>
+
+<div>
+<h2>Jokes</h2>
+<a href="/jokes/new">Submit a joke</a>
+<ul>{% for joke in jokes %}
+    <li>
+        {{joke.author }}:
+        {{ joke.text }}
+    </li>
+{% endfor %}</ul>
+</div>
+
+{% endblock body %}
