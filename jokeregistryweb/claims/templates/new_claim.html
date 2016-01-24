@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1>Submit a new claim</h1>
+<h2>Instructions</h2>
+<p>If you believe joke infringement has occurred, submit a link to the infringed and infringing jokes below.</p>
+
+<form action="/claims/new" method="post">
+{% csrf_token %}
+{% if errors %}
+    {% for error in errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+{% endif %}
+<label>URL to Infringed Tweet <input type="text" name="infringed_url" /></label>
+<label>URL to Infringing Tweet <input type="text" name="infringing_url" /></label>
+<button type="submit">Submit</button>
+</form>
+{% endblock body %}

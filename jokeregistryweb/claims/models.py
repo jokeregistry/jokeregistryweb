@@ -15,10 +15,14 @@ class Claim(models.Model):
         (REJECTED, 'Rejected')
     )
 
-    joke = models.ForeignKey(
+    infringing_joke = models.ForeignKey(
         'jokes.Joke',
-        help_text='The joke this claim is in regards to')
-    link = models.URLField(help_text='a link to the prior art')
+        related_name='infringing_claim',
+        help_text='The infringing joke')
+    infringed_joke = models.ForeignKey(
+        'jokes.Joke',
+        related_name='infringed_claim',
+        help_text='The original joke')
     text = models.TextField(help_text='additional detail', null=True, blank=True)
     status = models.IntegerField(choices=STATUS_CHOICES, default=FILED)
 
@@ -29,15 +33,9 @@ class Claim(models.Model):
         ordering = ('-created', '-updated')
 
     def approve(self):
-        new_joke = Joke.objects.import_from_url(self.link)
-
-        if new_joke.created < self.joke.created:
-            self.joke.parent = new_joke
-            self.joke.save()
-        else:
-            # This new joke is an infringer...
-            new_joke.parent = self.joke
-            new_joke.save()
+        if self.infringed_joke.created < self.infringing_joke.created:
+            self.infringing_joke.parent = self.infringed_joke
+            self.infringing_joke.save()
 
         self.status = Claim.APPROVED
         self.save()

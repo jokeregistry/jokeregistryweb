@@ -7,6 +7,11 @@ class JokeManager(models.Manager):
     registry = LoaderRegistry()
 
     def import_from_url(self, url):
+        # Check if joke already loaded
+        jokes = Joke.objects.filter(link=url)
+        if jokes.count() > 0:
+            return jokes[0]
+
         kwargs = self.registry.load(url)
         if kwargs:
             return self.create(**kwargs)
