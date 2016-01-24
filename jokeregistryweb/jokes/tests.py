@@ -9,10 +9,16 @@ import pytz
 import responses
 from unittest.mock import MagicMock
 
+
 class JokeTestCase(TestCase):
+
     @override_settings(TWITTER_BEARER_TOKEN='no-op')
     def test_twitter_url_submit(self):
         factory = RequestFactory()
+        request = factory.get('/jokes/load')
+        response = load(request)
+        self.assertEquals(response.status_code, 405)
+
         request = factory.post(
             '/jokes/load',
             {'url': 'https://twitter.com/cregslist/status/651932161755475968'})
