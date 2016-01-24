@@ -1,0 +1,1 @@
+# Don't check anything in here, this is where static files get collected.
