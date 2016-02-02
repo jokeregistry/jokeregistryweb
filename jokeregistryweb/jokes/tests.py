@@ -69,3 +69,28 @@ class JokeTestCase(TestCase):
 
         self.assertEquals(len(responses.calls), 1)
         self.assertEquals(User.objects.count(), 1)
+
+    @responses.activate
+    @override_settings(TWITTER_BEARER_TOKEN='no-op')
+    def test_duplicate_import_guard(self):
+        self.assertEquals(User.objects.count(), 0)
+
+        sample_response = {
+            'created_at': 'Thu Oct 08 01:28:34 +0000 2015',
+            'text': 'Linkedin Park',
+            'id': 651932161755475968,
+            'id_str': '651932161755475968',
+            'user': {
+                'screen_name': 'cregslist',
+                'id': 304721573,
+            }
+        }
+
+        responses.add(
+            responses.GET,
+            'https://api.twitter.com/1.1/statuses/show.json',
+            json=sample_response,
+            status=200)
+        joke1 = Joke.objects.import_from_url('https://twitter.com/cregslist/status/651932161755475968')
+        joke2 = Joke.objects.import_from_url('https://twitter.com/cregslist/status/651932161755475968')
+        self.assertEquals(joke1.id, joke2.id)

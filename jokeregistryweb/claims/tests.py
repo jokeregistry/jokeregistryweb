@@ -48,10 +48,11 @@ class ClaimsTestCase(TestCase):
             match_querystring=True)
 
         bad_joke = Joke.objects.import_from_url('https://twitter.com/cregslist/status/651932161755475968')
+        original_bad_joke = Joke.objects.import_from_url('https://twitter.com/iamsomejerk/status/651459722063822848')
 
         claim = Claim.objects.create(
-            joke=bad_joke,
-            link='https://twitter.com/iamsomejerk/status/651459722063822848',
+            infringing_joke=bad_joke,
+            infringed_joke=original_bad_joke
         )
         claim.approve()
 

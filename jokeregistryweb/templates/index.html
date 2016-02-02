@@ -3,15 +3,42 @@
 {% block body %}
 <h1>Welcome to the Joke Registry</h1>
 
-<div>
-<h2>Jokes</h2>
-<a href="/jokes/new">Submit a joke</a>
-<ul>{% for joke in jokes %}
-    <li>
-        {{joke.author }}:
-        {{ joke.text }}
-    </li>
-{% endfor %}</ul>
-</div>
+<table>
+    <thead>
+        <tr><td colspan="10000">Claims</td></tr>
+    </thead>
+    <tbody>
+        <tr><td colspan="10000"><a href="/claims/new">Submit a claim</a></td></tr>
+        {% for claim in claims %}
+        <tr>
+            <td>
+                {{ claim.infringed_joke.author }}
+                {{ claim.infringed_joke.created }}
+                {{ claim.infringed_joke.text }}
+            </td>
+            <td>
+                {{ claim.infringing_joke.author }}
+                {{ claim.infringing_joke.created }}
+                {{ claim.infringing_joke.text }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr><td>Jokes</td></tr>
+    </thead>
+    <tbody>
+        <tr><td><a href="/jokes/new">Submit a joke</a></td></tr>
+        {% for joke in jokes %}
+        <tr><td>
+            {{ joke.author }}:
+            {{ joke.text }}
+        </td></tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock body %}
